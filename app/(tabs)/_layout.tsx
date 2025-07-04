@@ -24,20 +24,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="start"
+        options={{
+          title: 'Start',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="play-circle" color={color} size={size + 8} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="friends"
         options={{
           title: 'Friends',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="people-outline" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="start"
-        options={{
-          title: 'Start',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="play-outline" color={color} size={size} />
           ),
         }}
       />
