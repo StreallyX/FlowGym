@@ -1,24 +1,20 @@
-import { ThemeProvider, DefaultTheme } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { ThemeProvider, DefaultTheme } from '@react-navigation/native'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import 'react-native-reanimated'
 
 export default function RootLayout() {
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) return null;
-
   const WhiteTheme = {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: '#ffffff',   // force white background
-      card: '#ffffff',         // also for header if shown
+      background: '#ffffff',
+      card: '#ffffff',
+      text: '#000000',
+      border: '#e0e0e0',
+      primary: '#000000',
     },
-  };
+  }
 
   return (
     <ThemeProvider value={WhiteTheme}>
@@ -28,5 +24,5 @@ export default function RootLayout() {
       </Stack>
       <StatusBar style="dark" />
     </ThemeProvider>
-  );
+  )
 }
