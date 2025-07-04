@@ -1,7 +1,7 @@
 import { radius, spacing, typography } from '@/lib/theme'
 import { useTheme } from '@/lib/useTheme'
 import { useRouter } from 'expo-router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   Image,
   SafeAreaView,
@@ -9,10 +9,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function HomeScreen() {
   const router = useRouter()
   const { colors } = useTheme()
+
+  // ✅ Rediriger si déjà connecté
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await AsyncStorage.getItem('user')
+      if (user) {
+        router.replace('/(tabs)' as any)
+      }
+    }
+
+    checkUser()
+  }, [])
 
   return (
     <SafeAreaView
@@ -27,13 +40,12 @@ export default function HomeScreen() {
       <Image
         source={require('../assets/images/flowgym-logo.png')}
         style={{
-          width: 480,           // double the original width
-          height: 160,           // double the original height
+          width: 480,
+          height: 160,
           resizeMode: 'contain',
           marginTop: spacing.xl,
         }}
       />
-
 
       {/* Title */}
       <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -50,9 +62,11 @@ export default function HomeScreen() {
       </View>
 
       {/* Buttons */}
-      <View style={{ width: '100%', gap: spacing.md, marginBottom: spacing.xl }}>
+      <View
+        style={{ width: '100%', gap: spacing.md, marginBottom: spacing.xl }}
+      >
         <TouchableOpacity
-          onPress={() => router.push({ pathname: '/register' as any})}
+          onPress={() => router.push('/register' as any)}
           style={{
             paddingVertical: spacing.md,
             borderRadius: radius.md,
@@ -61,13 +75,18 @@ export default function HomeScreen() {
             alignItems: 'center',
           }}
         >
-          <Text style={{ color: colors.text, fontSize: typography.body.fontSize }}>
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: typography.body.fontSize,
+            }}
+          >
             Sign Up
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => router.push({ pathname: '/login' as any})}
+          onPress={() => router.push('/login' as any)}
           style={{
             paddingVertical: spacing.md,
             borderRadius: radius.md,
@@ -76,11 +95,15 @@ export default function HomeScreen() {
             alignItems: 'center',
           }}
         >
-          <Text style={{ color: colors.text, fontSize: typography.body.fontSize }}>
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: typography.body.fontSize,
+            }}
+          >
             Log In
           </Text>
         </TouchableOpacity>
-
       </View>
     </SafeAreaView>
   )
