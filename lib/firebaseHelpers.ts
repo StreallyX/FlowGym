@@ -28,3 +28,9 @@ export const updateUserProfile = async (userId: string, data: any) => {
     profilePicture: data.profilePicture,
   })
 }
+
+export const getExercisesByUser = async (userId: string) => {
+  const q = query(collection(db, 'exercises'), where('userId', '==', userId))
+  const snapshot = await getDocs(q)
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+}
